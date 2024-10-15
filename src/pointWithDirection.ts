@@ -2,7 +2,7 @@
 
 import { Color, Point } from "./point";
 
-enum Direction {
+export enum Direction {
     Up = 'up',
     Right = 'right',
     Down = 'down',

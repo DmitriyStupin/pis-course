@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Point = void 0;
+exports.Point = exports.Color = void 0;
 var Color;
 (function (Color) {
     Color["Red"] = "red";
     Color["Green"] = "green";
     Color["Blue"] = "blue";
-})(Color || (Color = {}));
+})(Color || (exports.Color = Color = {}));
 class Point {
     constructor(x, y, color) {
         this.x = x;
