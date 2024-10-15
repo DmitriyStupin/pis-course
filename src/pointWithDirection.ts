@@ -1,6 +1,6 @@
-// Точка с заданным направлением
+// Точка, которая будет с заданным направлением
 
-import { Point } from "./point";
+import { Color, Point } from "./point";
 
 enum Direction {
     Up = 'up',
@@ -9,7 +9,7 @@ enum Direction {
     Left = 'left'
 }
 
-export class pointWithDirection extends Point {
+export class PointWithDirection extends Point {
     direction: Direction;
 
     constructor(x: number, y: number, color: Color, direction: Direction) {

@@ -1,8 +1,8 @@
-// Точка с заданной скоростью
+// Точка, которая будет с заданной скоростью
 
-import { Point } from "./point";
+import { Color, Point } from "./point";
 
-export class pointWithSpeed extends Point {
+export class PointWithSpeed extends Point {
     speed: number;
 
     constructor(x: number, y: number, color: Color, speed: number) {
