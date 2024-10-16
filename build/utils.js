@@ -8,11 +8,13 @@ exports.parseString = parseString;
 exports.parseNumber = parseNumber;
 exports.parseColor = parseColor;
 exports.parseDirection = parseDirection;
+const point_1 = require("./point");
+const pointWithDirection_1 = require("./pointWithDirection");
 const stringRegexp = /^".*"$/;
 const numberRegex = /^-?\d+(\.\d+)?$/;
 const colorRegex = /^(red|green|blue)$/i;
 const directionRegex = /^(up|down|left|right)$/i;
-// Проверки строк
+// Всякие проверки
 function isValidString(value) {
     return stringRegexp.test(value);
 }
@@ -39,14 +41,25 @@ function parseNumber(text) {
     return parseFloat(text);
 }
 function parseColor(text) {
-    if (!isValidColor(text)) {
+    // Убираем кавычки и приводим к нижнему регистру
+    const cleanText = text.replace(/"/g, '').toLowerCase();
+    if (!isValidColor(cleanText)) {
         throw new Error('Цвет передан в неверном формате');
     }
-    return text.toLowerCase();
+    const color = Object.values(point_1.Color).find(c => c === cleanText);
+    if (!color) {
+        throw new Error(`Цвет "${cleanText}" не найден в enum Color`);
+    }
+    return color;
 }
 function parseDirection(text) {
-    if (!isValidDirection(text)) {
+    const cleanText = text.replace(/"/g, '').toLowerCase();
+    if (!isValidDirection(cleanText)) {
         throw new Error('Направление передано в неверном формате');
     }
-    return text.toLowerCase();
+    const direction = Object.values(pointWithDirection_1.Direction).find(c => c === cleanText);
+    if (!direction) {
+        throw new Error(`Направление "${cleanText}" не найдено в enum Direction`);
+    }
+    return direction;
 }

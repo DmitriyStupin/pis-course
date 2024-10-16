@@ -32,67 +32,50 @@ function getLineType(text) {
     if (!(0, utils_1.isValidString)(text)) {
         throw new Error('Ожидался тип данных');
     }
-    const trimmedText = text.trim().replace(/"/g, '').split(' ')[0];
-    if (!POINT_TYPES.includes(trimmedText)) {
+    const string = (0, utils_1.parseString)(text);
+    if (!POINT_TYPES.includes(string)) {
         throw new Error('Неверный тип данных объекта');
     }
-    return trimmedText;
+    return string;
 }
 function createPoint(...args) {
     if (args.length !== 3) {
         throw new Error('Неверное количество аргументов!');
     }
-    const [x, y, color] = args;
-    if (!(0, utils_1.isNumber)(x) || !(0, utils_1.isNumber)(y)) {
-        throw new Error('Координаты должны быть числом!');
+    const [x, y, sColor] = args;
+    if (!(0, utils_1.isValidString)(sColor)) {
+        throw new Error('Цвет должен быть строкой!');
     }
-    const parsedColor = (0, utils_1.parseColor)(color);
-    if (!(0, utils_1.isValidColor)(color)) {
-        throw new Error('Недопустимое значение цвета!');
-    }
-    return new point_1.Point((0, utils_1.parseNumber)(x), (0, utils_1.parseNumber)(y), parsedColor);
+    return new point_1.Point((0, utils_1.parseNumber)(x), (0, utils_1.parseNumber)(y), (0, utils_1.parseColor)(sColor));
 }
 function createPointWithSpeed(...args) {
     if (args.length !== 4) {
         throw new Error('Ожидалось 4 аргумента: x, y, цвет и скорость');
     }
-    const [x, y, color, speed] = args;
-    if (!(0, utils_1.isNumber)(x) || !(0, utils_1.isNumber)(y)) {
-        throw new Error('Координаты должны быть числом!');
+    const [x, y, sColor, speed] = args;
+    if (!(0, utils_1.isValidString)(sColor)) {
+        throw new Error('Цвет должен быть строкой!');
     }
-    // Проверка на допустимый цвет
-    if (!(0, utils_1.isValidColor)(color)) {
-        throw new Error('Цвет должен быть одним из допустимых значений: red, green, blue');
-    }
-    // Проверка, что скорость является числом
-    if (!(0, utils_1.isNumber)(speed)) {
-        throw new Error('Скорость должна быть числом');
-    }
-    return new pointWithSpeed_1.PointWithSpeed((0, utils_1.parseNumber)(x), (0, utils_1.parseNumber)(y), color, (0, utils_1.parseNumber)(speed));
+    const color = (0, utils_1.parseString)(sColor);
+    return new pointWithSpeed_1.PointWithSpeed((0, utils_1.parseNumber)(x), (0, utils_1.parseNumber)(y), (0, utils_1.parseColor)(color), (0, utils_1.parseNumber)(speed));
 }
 function createPointWithDirection(...args) {
     if (args.length !== 4) {
         throw new Error('Ожидалось 4 аргумента: x, y, цвет и направление');
     }
-    const [x, y, color, direction] = args;
-    // Проверка, что x и y являются числами
-    if (!(0, utils_1.isNumber)(x) || !(0, utils_1.isNumber)(y)) {
-        throw new Error('Координаты должны быть числом!');
+    const [x, y, sColor, sDirection] = args;
+    if (!(0, utils_1.isValidString)(sColor)) {
+        throw new Error('Цвет должен быть строкой!');
     }
-    // Проверка на допустимый цвет
-    if (!(0, utils_1.isValidColor)(color)) {
-        throw new Error('Цвет должен быть одним из допустимых значений: red, green, blue');
+    if (!(0, utils_1.isValidString)(sDirection)) {
+        throw new Error('Направление должно быть строкой');
     }
-    // Проверка на допустимое направление
-    if (!(0, utils_1.isValidDirection)(direction)) {
-        throw new Error('Направление должно быть одним из допустимых значений: up, down, left, right');
-    }
-    return new pointWithDirection_1.PointWithDirection((0, utils_1.parseNumber)(x), (0, utils_1.parseNumber)(y), color, direction);
+    return new pointWithDirection_1.PointWithDirection((0, utils_1.parseNumber)(x), (0, utils_1.parseNumber)(y), (0, utils_1.parseColor)(sColor), (0, utils_1.parseDirection)(sDirection));
 }
 function create(...args) {
-    const firstArg = args.shift(); // Убираем первый аргумент
+    const firstArg = args.shift();
     if (!firstArg) {
-        throw new Error('Необходимо передать тип точки'); // Проверка на undefined
+        throw new Error('Необходимо передать тип точки');
     }
     const type = getLineType(firstArg);
     switch (type) {

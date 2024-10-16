@@ -1,9 +1,12 @@
+import { Color } from "./point";
+import { Direction } from "./pointWithDirection";
+
 const stringRegexp = /^".*"$/;
 const numberRegex = /^-?\d+(\.\d+)?$/;
 const colorRegex = /^(red|green|blue)$/i;
 const directionRegex = /^(up|down|left|right)$/i;
 
-// Проверки строк
+// Всякие проверки
 
 export function isValidString(value: string): boolean {
     return stringRegexp.test(value);
@@ -38,18 +41,35 @@ export function parseNumber(text: string) {
     return parseFloat(text);
 }
 
-export function parseColor(text: string) {
-    if (!isValidColor(text)) {
+export function parseColor(text: string): Color {
+    // Убираем кавычки и приводим к нижнему регистру
+    const cleanText = text.replace(/"/g, '').toLowerCase();
+
+    if (!isValidColor(cleanText)) {
         throw new Error('Цвет передан в неверном формате');
     }
 
-    return text.toLowerCase();
+    const color = Object.values(Color).find(c => c === cleanText);
+
+    if (!color) {
+        throw new Error(`Цвет "${cleanText}" не найден в enum Color`);
+    }
+
+    return color as Color;
 }
 
-export function parseDirection(text: string) {
-    if (!isValidDirection(text)) {
+export function parseDirection(text: string): Direction {
+
+    const cleanText = text.replace(/"/g, '').toLowerCase();
+
+    if (!isValidDirection(cleanText)) {
         throw new Error('Направление передано в неверном формате');
     }
 
-    return text.toLowerCase();
+    const direction = Object.values(Direction).find(c => c === cleanText);
+    if (!direction) {
+        throw new Error(`Направление "${cleanText}" не найдено в enum Direction`);
+    }
+
+    return direction as Direction;
 }

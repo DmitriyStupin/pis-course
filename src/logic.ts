@@ -1,15 +1,12 @@
-import { Color, Point } from "./point";
+import { Point } from "./point";
 import { PointWithSpeed } from "./pointWithSpeed";
-import { Direction, PointWithDirection } from "./pointWithDirection";
+import { PointWithDirection } from "./pointWithDirection";
 import { 
     parseString,
     parseNumber,
     parseColor,
     parseDirection,
-    isValidString,
-    isNumber,
-    isValidColor,
-    isValidDirection
+    isValidString
  } from "./utils";
 
 const POINT_TYPES = ['base', 'direction', 'speed'] as const;
@@ -37,29 +34,30 @@ function getLineType(text: string): StringPointType {
     if (!isValidString(text)) {
         throw new Error('Ожидался тип данных')
     }
-    const trimmedText = text.trim().replace(/"/g, '').split(' ')[0];
-    if (!POINT_TYPES.includes(trimmedText as StringPointType)) {
+    const string = parseString(text);
+
+    if (!POINT_TYPES.includes(string as StringPointType)) {
         throw new Error('Неверный тип данных объекта');
     }
-    return trimmedText as StringPointType;
+    return string as StringPointType;
 }
 
 export function createPoint(...args: string[]): Point {
     if (args.length !== 3) {
         throw new Error('Неверное количество аргументов!');
     }
-    const [x, y, color] = args;
-
-    if (!isNumber(x) || !isNumber(y)) {
-        throw new Error('Координаты должны быть числом!');
-    }
-
-    const parsedColor = parseColor(color);
-    if (!isValidColor(color)) {
-        throw new Error('Недопустимое значение цвета!');
-    }
     
-    return new Point(parseNumber(x), parseNumber(y), parsedColor as Color);
+    const [x, y, sColor] = args;
+
+    if (!isValidString(sColor)) {
+        throw new Error('Цвет должен быть строкой!');
+    }
+
+    return new Point(
+        parseNumber(x),
+        parseNumber(y),
+        parseColor(sColor)  
+    );
 }
 
 export function createPointWithSpeed(...args: string[]): PointWithSpeed {
@@ -67,55 +65,48 @@ export function createPointWithSpeed(...args: string[]): PointWithSpeed {
         throw new Error('Ожидалось 4 аргумента: x, y, цвет и скорость');
     }
 
-    const [x, y, color, speed] = args;
+    const [x, y, sColor, speed] = args;
 
-    if (!isNumber(x) || !isNumber(y)) {
-        throw new Error('Координаты должны быть числом!');
+    if(!isValidString(sColor)) {
+        throw new Error('Цвет должен быть строкой!');
     }
 
-    // Проверка на допустимый цвет
-    if (!isValidColor(color)) {
-        throw new Error('Цвет должен быть одним из допустимых значений: red, green, blue');
-    }
-
-    // Проверка, что скорость является числом
-    if (!isNumber(speed)) {
-        throw new Error('Скорость должна быть числом');
-    }
-
-    return new PointWithSpeed(parseNumber(x), parseNumber(y), color as Color, parseNumber(speed));
+    const color = parseString(sColor);
+    return new PointWithSpeed(
+        parseNumber(x),
+        parseNumber(y),
+        parseColor(color),
+        parseNumber(speed)
+    )
 }
 
 export function createPointWithDirection(...args: string[]): PointWithDirection {
     if (args.length !== 4) {
         throw new Error('Ожидалось 4 аргумента: x, y, цвет и направление');
     }
+    const [x, y, sColor, sDirection] = args;
 
-    const [x, y, color, direction] = args;
-
-    // Проверка, что x и y являются числами
-    if (!isNumber(x) || !isNumber(y)) {
-        throw new Error('Координаты должны быть числом!');
+    if(!isValidString(sColor)) {
+        throw new Error('Цвет должен быть строкой!');
     }
 
-    // Проверка на допустимый цвет
-    if (!isValidColor(color)) {
-        throw new Error('Цвет должен быть одним из допустимых значений: red, green, blue');
+    if (!isValidString(sDirection)) {
+        throw new Error('Направление должно быть строкой');
     }
 
-    // Проверка на допустимое направление
-    if (!isValidDirection(direction)) {
-        throw new Error('Направление должно быть одним из допустимых значений: up, down, left, right');
-    }
-
-    return new PointWithDirection(parseNumber(x), parseNumber(y), color as Color, direction as Direction);
+    return new PointWithDirection(
+        parseNumber(x),
+        parseNumber(y),
+        parseColor(sColor),
+        parseDirection(sDirection)
+    )
 }
 
 export function create(...args: string[]): PointType {
-    const firstArg = args.shift(); // Убираем первый аргумент
+    const firstArg = args.shift(); 
 
     if (!firstArg) {
-        throw new Error('Необходимо передать тип точки'); // Проверка на undefined
+        throw new Error('Необходимо передать тип точки');
     }
 
     const type = getLineType(firstArg);
