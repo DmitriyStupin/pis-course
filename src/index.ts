@@ -14,7 +14,6 @@ const data = `
 
 "speed" 34.2 45 "red" 12
 "speed" 3.1 4.5 "green" 1
-
 `;
 
 
