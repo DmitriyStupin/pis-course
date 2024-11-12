@@ -27,8 +27,8 @@ function startFromLine() {
       console.log('\n Получена строка:', line);
       const point = create(...args);
       console.log('Создан объект:', point)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      console.log(error.message);
     }
   })
 };
@@ -43,8 +43,8 @@ function startFromFile() {
       console.log('\n Получена строка:', line);
       const point = create(...args);
       console.log('Создан объект:', point)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      console.log(error.message);
     }
   })
 };

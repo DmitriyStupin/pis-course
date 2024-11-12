@@ -11,7 +11,6 @@ const data = `
 
 "speed" 34.2 45 "red" 12
 "speed" 3.1 4.5 "green" 1
-
 `;
 // Тут мы стартанем со строки
 function startFromLine() {
@@ -25,7 +24,7 @@ function startFromLine() {
             console.log('Создан объект:', point);
         }
         catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     });
 }
