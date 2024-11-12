@@ -27,7 +27,7 @@ export function splitTextToLines(text: string) {
 }
 
 export function splitLine(text: string) {
-    return text.trim().split(' ');
+    return text.trim().split('  ');
 }
 
 function getLineType(text: string): StringPointType {
@@ -42,7 +42,7 @@ function getLineType(text: string): StringPointType {
     return string as StringPointType;
 }
 
-export function createPoint(...args: string[]): Point {
+function createPoint(...args: string[]): Point {
     if (args.length !== 3) {
         throw new Error('Неверное количество аргументов!');
     }
@@ -60,7 +60,7 @@ export function createPoint(...args: string[]): Point {
     );
 }
 
-export function createPointWithSpeed(...args: string[]): PointWithSpeed {
+function createPointWithSpeed(...args: string[]): PointWithSpeed {
     if (args.length !== 4) {
         throw new Error('Ожидалось 4 аргумента: x, y, цвет и скорость');
     }
@@ -80,7 +80,7 @@ export function createPointWithSpeed(...args: string[]): PointWithSpeed {
     )
 }
 
-export function createPointWithDirection(...args: string[]): PointWithDirection {
+function createPointWithDirection(...args: string[]): PointWithDirection {
     if (args.length !== 4) {
         throw new Error('Ожидалось 4 аргумента: x, y, цвет и направление');
     }

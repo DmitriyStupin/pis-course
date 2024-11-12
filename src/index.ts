@@ -6,7 +6,7 @@ import {
     splitTextToLines
  } from "./logic";
 const data = `
-"base" 5.6 3.4 "red" 
+"base" 5.6 3.4 "green"
 "speed" 51.6 32.4 "green"
 
 "direction" 2.2 3 "red" 

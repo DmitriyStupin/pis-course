@@ -51,9 +51,9 @@ export function parseColor(text: string): Color {
 
     const color = Object.values(Color).find(c => c === cleanText);
 
-    if (!color) {
-        throw new Error(`Цвет "${cleanText}" не найден в enum Color`);
-    }
+    // if (!color) {
+    //     throw new Error(`Цвет "${cleanText}" не найден в enum Color`);
+    // }
 
     return color as Color;
 }
@@ -67,9 +67,9 @@ export function parseDirection(text: string): Direction {
     }
 
     const direction = Object.values(Direction).find(c => c === cleanText);
-    if (!direction) {
-        throw new Error(`Направление "${cleanText}" не найдено в enum Direction`);
-    }
+    // if (!direction) {
+    //     throw new Error(`Направление "${cleanText}" не найдено в enum Direction`);
+    // }
 
     return direction as Direction;
 }
