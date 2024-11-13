@@ -51,10 +51,6 @@ export function parseColor(text: string): Color {
 
     const color = Object.values(Color).find(c => c === cleanText);
 
-    // if (!color) {
-    //     throw new Error(`Цвет "${cleanText}" не найден в enum Color`);
-    // }
-
     return color as Color;
 }
 

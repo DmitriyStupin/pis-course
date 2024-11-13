@@ -1,8 +1,9 @@
 import fs from 'fs';
-import { readFromFile, splitTextToLines, splitLine, create } from '../src/logic';
+import { readFromFile, splitTextToLines, splitLine, create, FooError } from '../src/logic';
 import { Point, Color } from '../src/point';
 import { PointWithSpeed } from '../src/pointWithSpeed';
 import { PointWithDirection, Direction } from '../src/pointWithDirection';
+import { error } from 'console';
 
 test('split text to lines', () => {
   expect(splitTextToLines('s\nb')).toStrictEqual(['s', 'b']);
@@ -75,7 +76,8 @@ test('create points', () => {
 
   expect(
     () => create('"direction"', '12.2', '18.2', '"blue"', 'rightdown')
-  ).toThrow();
+  ).toThrow(new FooError('Направление должно быть строкой'));
+
 
   expect(
     () => create('"direction"', '12.2', '"blue"', 'rightdown')

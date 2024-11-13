@@ -1,19 +1,45 @@
 import { Point } from "./point";
 import { PointWithSpeed } from "./pointWithSpeed";
 import { PointWithDirection } from "./pointWithDirection";
-import { 
+import {
     parseString,
     parseNumber,
     parseColor,
     parseDirection,
     isValidString
- } from "./utils";
+} from "./utils";
 
 const POINT_TYPES = ['base', 'direction', 'speed'] as const;
 export type StringPointType = typeof POINT_TYPES[number];
 export type PointType = Point | PointWithDirection | PointWithSpeed;
 
 import fs from 'fs';
+
+export class FooError extends Error {
+    constructor(msg: string) {
+        super(msg);
+
+        // Set the prototype explicitly.
+        Object.setPrototypeOf(this, FooError.prototype);
+    }
+
+    sayHello() {
+        return "hello " + this.message;
+    }
+}
+
+export class OtherError extends Error {
+    constructor(msg: string) {
+        super(msg);
+
+        // Set the prototype explicitly.
+        Object.setPrototypeOf(this, FooError.prototype);
+    }
+
+    sayHello() {
+        return "hello " + this.message;
+    }
+}
 
 export function readFromFile() {
     return fs.readFileSync('data.txt').toString();
@@ -46,7 +72,7 @@ function createPoint(...args: string[]): Point {
     if (args.length !== 3) {
         throw new Error('Неверное количество аргументов!');
     }
-    
+
     const [x, y, sColor] = args;
 
     if (!isValidString(sColor)) {
@@ -56,7 +82,7 @@ function createPoint(...args: string[]): Point {
     return new Point(
         parseNumber(x),
         parseNumber(y),
-        parseColor(sColor)  
+        parseColor(sColor)
     );
 }
 
@@ -67,7 +93,7 @@ function createPointWithSpeed(...args: string[]): PointWithSpeed {
 
     const [x, y, sColor, speed] = args;
 
-    if(!isValidString(sColor)) {
+    if (!isValidString(sColor)) {
         throw new Error('Цвет должен быть строкой!');
     }
 
@@ -86,12 +112,12 @@ function createPointWithDirection(...args: string[]): PointWithDirection {
     }
     const [x, y, sColor, sDirection] = args;
 
-    if(!isValidString(sColor)) {
+    if (!isValidString(sColor)) {
         throw new Error('Цвет должен быть строкой!');
     }
 
     if (!isValidString(sDirection)) {
-        throw new Error('Направление должно быть строкой');
+        throw new OtherError('Направление должно быть строкой');
     }
 
     return new PointWithDirection(
@@ -103,7 +129,7 @@ function createPointWithDirection(...args: string[]): PointWithDirection {
 }
 
 export function create(...args: string[]): PointType {
-    const firstArg = args.shift(); 
+    const firstArg = args.shift();
 
     if (!firstArg) {
         throw new Error('Необходимо передать тип точки');
