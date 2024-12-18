@@ -107,3 +107,7 @@ test('create points', () => {
     () => create('random string')
   ).toThrow();
 })
+
+test('намеренный провал', () => {
+  expect(true).toBe(false); // Этот тест всегда будет проваливаться
+});
