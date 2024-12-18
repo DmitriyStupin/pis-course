@@ -1,8 +1,8 @@
 import fs from 'fs';
 import { readFromFile, splitTextToLines, splitLine, create, FooError } from '../src/logic';
-// import { Point, Color } from '../src/point';
-// import { PointWithSpeed } from '../src/pointWithSpeed';
-// import { PointWithDirection, Direction } from '../src/pointWithDirection';
+import { Point, Color } from '../src/point';
+import { PointWithSpeed } from '../src/pointWithSpeed';
+import { PointWithDirection, Direction } from '../src/pointWithDirection';
 import { error } from 'console';
 
 test('split text to lines', () => {
