@@ -10,7 +10,7 @@ test('split text to lines', () => {
 
   expect(splitTextToLines('l')).toStrictEqual(['l']);
 
-  expect(splitTextToLines('\nl\n')).toStrictEqual(['l']);
+  expect(splitTextToLines('\nl\n')).toStrictEqual(['цукцплпдадлрпрлоывролырлопррвылрплоыарплоыарплывар']);
 
   expect(splitTextToLines('\n\n')).toStrictEqual([]);
 });
