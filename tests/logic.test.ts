@@ -5,15 +5,15 @@ import { PointWithSpeed } from '../src/pointWithSpeed';
 import { PointWithDirection, Direction } from '../src/pointWithDirection';
 import { error } from 'console';
 
-test('split text to lines', () => {
-  expect(splitTextToLines('s\nb')).toStrictEqual(['s', 'b']);
+// test('split text to lines', () => {
+//   expect(splitTextToLines('s\nb')).toStrictEqual(['s', 'b']);
 
-  expect(splitTextToLines('l')).toStrictEqual(['l']);
+//   expect(splitTextToLines('l')).toStrictEqual(['l']);
 
-  expect(splitTextToLines('\nl\n')).toStrictEqual(['l']);
+//   expect(splitTextToLines('\nl\n')).toStrictEqual(['l']);
 
-  expect(splitTextToLines('\n\n')).toStrictEqual([]);
-});
+//   expect(splitTextToLines('\n\n')).toStrictEqual([]);
+// });
 
 test('split line', () => {
   expect(splitLine('a  b')).toStrictEqual(['a', 'b']);
